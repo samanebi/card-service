@@ -1,9 +1,22 @@
 package com.cardservice.demo.models;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table("transaction")
+@SequenceGenerator(name="TxSequence", initialValue=100000)
 public class Transaction {
 
 
-    private static Long sequence;
+
+
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seqTxSequence")
+    private Long sequence;
+    @ManyToOne
+    @JoinColumn(name = "id" , nullable = false)
     private Card source;
     private String destination;
     private Integer amount;
@@ -11,7 +24,7 @@ public class Transaction {
     public Boolean execute(){
 
 
-        sequence++;
+
         return true;
     }
 
@@ -19,23 +32,12 @@ public class Transaction {
         this.source = source;
         this.destination = destination;
         this.amount = amount;
-        if (sequence == null){
-            sequence = Long.valueOf(10000);
-        }
+
     }
 
 
-    public static Long getSequence() {
-        return sequence;
-    }
 
-    public Card getSource() {
-        return source;
-    }
 
-    public void setSource(Card source) {
-        this.source = source;
-    }
 
     public String getDestination() {
         return destination;
@@ -52,4 +54,6 @@ public class Transaction {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+
 }

@@ -5,5 +5,6 @@ public class CardServiceRequest {
 
     private CardOperation operation;
     private String card;
+    private String username;
 
 }
