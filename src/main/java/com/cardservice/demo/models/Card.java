@@ -55,7 +55,7 @@ public class Card {
             this.balance = this.balance - amount;
         }
         else if(amount < 0) {
-            result = 102;
+            result = 101;
             Logger.getGlobal().severe("amount is not valid");
         }
         else {
