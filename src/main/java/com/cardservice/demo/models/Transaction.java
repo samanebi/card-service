@@ -1,13 +1,28 @@
 package com.cardservice.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "transaction")
 public class Transaction {
 
+    @Id
+    @GeneratedValue
+    private Long txId;
+
+    @JsonIgnore
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "cardId" , insertable = false , updatable = false)
     private Card source;
+    @JsonIgnore
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "cardId" , insertable = false , updatable = false)
     private Card destination;
     private Integer amount;
+    private Long timestamp;
 
 
 
@@ -16,6 +31,7 @@ public class Transaction {
         this.source = source;
         this.destination = destination;
         this.amount = amount;
+        this.timestamp = System.currentTimeMillis();
 
     }
 
@@ -38,5 +54,14 @@ public class Transaction {
     public Card getSource() {
         return source;
     }
+
+    public void setSource(Card source) {
+        this.source = source;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
 
 }

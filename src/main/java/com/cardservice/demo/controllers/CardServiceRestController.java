@@ -30,8 +30,9 @@ public class CardServiceRestController {
     }
 
     @RequestMapping("/delete")
-    public Boolean deleteCart(@RequestBody Card card){
-        cardOperationService.delete(card);
+    public Boolean deleteCart(@RequestBody CardServiceRequest card){
+
+        cardOperationService.delete(cardOperationService.findCard(card.getCard()));
         return true;
     }
 

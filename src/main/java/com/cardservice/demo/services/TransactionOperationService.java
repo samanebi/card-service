@@ -1,6 +1,7 @@
 package com.cardservice.demo.services;
 
 import com.cardservice.demo.models.*;
+import com.cardservice.demo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
@@ -19,15 +20,22 @@ public class TransactionOperationService {
     private Environment environment;
     @Autowired
     private UserOperationService userOperationService;
-
+    @Autowired
+    private CardOperationService cardOperationService;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public TransactionResponse execute(TransactionRequest transaction){
         //todo : 2 payment services
         TransactionResponse transactionResponse = this.paymentRequest(transaction);
         User source = userOperationService.findUserByCard(transaction.getSource());
         User dest = userOperationService.findUserByCard(transaction.getDest());
+        Card sourceCard = cardOperationService.findCard(transaction.getSource());
+        Card destCard = cardOperationService.findCard(transaction.getDest());
         //todo : sms provider
         if (!transactionResponse.getResult().equals("failed")){
+            Transaction transactionResult = new Transaction(sourceCard , destCard , transaction.getAmount());
+            transactionRepository.save(transactionResult);
             SmsResponse smsResponseOwner = this.SmsRequest(
                     new SmsRequest("money from to your account" , source.getPhoneNumber()));
             SmsResponse smsResponseDest = this.SmsRequest(

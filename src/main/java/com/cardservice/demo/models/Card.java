@@ -1,6 +1,9 @@
 package com.cardservice.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "card")
@@ -12,12 +15,16 @@ public class Card {
 
     @Column(unique = true)
     private String cardNumber;
+    @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "userId" )
     private User owner;
 
+    @OneToMany(mappedBy = "destination")
+    private Set<Transaction> transactionDest;
 
-
+    @OneToMany(mappedBy = "source")
+    private Set<Transaction> transactionSource;
 
     @Override
     public String toString() {
@@ -46,5 +53,21 @@ public class Card {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Set<Transaction> getTransactionDest() {
+        return transactionDest;
+    }
+
+    public void setTransactionDest(Set<Transaction> transactionDest) {
+        this.transactionDest = transactionDest;
+    }
+
+    public Set<Transaction> getTransactionSource() {
+        return transactionSource;
+    }
+
+    public void setTransactionSource(Set<Transaction> transactionSource) {
+        this.transactionSource = transactionSource;
     }
 }
