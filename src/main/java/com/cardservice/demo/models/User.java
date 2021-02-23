@@ -4,14 +4,12 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table("user")
+@Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue
-    private Long id;
-
-
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long userId;
 
     @OneToMany(mappedBy = "owner")
     private Set<Card> cards;
@@ -21,7 +19,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
 
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
@@ -41,4 +39,16 @@ public class User {
     public Set<Card> getCards() {
         return cards;
     }
+
+    public void setCards(Set<Card> cards) {
+        for (Card card : cards){
+            card.setOwner(this);
+        }
+        this.cards = cards;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
 }

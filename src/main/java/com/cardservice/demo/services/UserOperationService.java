@@ -81,6 +81,10 @@ public class UserOperationService implements EntityOperationService<User> {
         return userRepository.findUserByCardsContains(card);
     }
 
+    public  User findUserByPhone(String phone){
+        return userRepository.findUserByPhoneNumber(phone);
+    }
+
 
 
 }

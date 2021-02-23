@@ -10,5 +10,6 @@ import java.util.Set;
 public interface UserRepository extends CrudRepository<User , Long> {
 
     User findUserByCardsContains(String card);
+    User findUserByPhoneNumber(String phone);
 
 }

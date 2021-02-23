@@ -3,17 +3,17 @@ package com.cardservice.demo.models;
 import javax.persistence.*;
 
 @Entity
-@Table("card")
+@Table(name = "card")
 public class Card {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long cardId;
 
     @Column(unique = true)
     private String cardNumber;
-    @ManyToOne
-    @JoinColumn(name = "id" , nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "userId" )
     private User owner;
 
 
@@ -22,14 +22,14 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "id=" + id +
+                "id=" + cardId +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", owner=" + owner +
                 '}';
     }
 
-    public Long getId() {
-        return id;
+    public Long getCardId() {
+        return cardId;
     }
 
     public String getCardNumber() {
@@ -40,5 +40,11 @@ public class Card {
         return owner;
     }
 
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
