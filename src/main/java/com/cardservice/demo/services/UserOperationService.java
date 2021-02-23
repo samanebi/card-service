@@ -76,13 +76,11 @@ public class UserOperationService implements EntityOperationService<User> {
     }
 
 
-    public User findUser(Card card){
-        return userRepository.findUserByCardsContains(card.getCardNumber());
+    public User findUserByCard(String card){
+
+        return userRepository.findUserByCardsContains(card);
     }
 
-    public User findUser(String username){
-        return userRepository.findUserByUsername(username);
-    }
 
 
 }

@@ -34,6 +34,8 @@ public class CardOperationService implements EntityOperationService<Card> {
         cardRepository.delete(entity);
     }
 
+    // todo : find solution for delete functions
+
     @Override
     public void deleteAll(Iterable<Card> entities) {
         cardRepository.deleteAll(entities);
@@ -41,66 +43,16 @@ public class CardOperationService implements EntityOperationService<Card> {
 
     @Override
     public Boolean update(Card entity, Card value) {
-        Card temp = null;
-        if (entity.getCardNumber().equals(value.getCardNumber()) &&
-            entity.getId().equals(value.getId())){
-            entity.overwrite(value);
-            temp = cardRepository.save(entity);
-        }
-
-        return temp != null;
+        return null;
     }
 
-    public Integer increaseAmount(Card card , Integer amount){
-        Integer result = 100;
-        if (card != null && card.getPin() != null){
-
-            Integer resultCode = card.increaseBalance(amount);
-            if (!resultCode.equals(100)){
-                result = resultCode;
-
-            }
-        }
-        else if (card == null){
-            result = 110 ;
-            Logger.getGlobal().severe("null value passed : card");
-        }
-        else {
-            result = 110 ;
-            Logger.getGlobal().severe("null value passed : pin");
-        }
-
-        return result;
-    }
-
-    public Integer decreaseAmount(Card card , Integer amount){
-        Integer result = 100;
-        if (card != null && card.getPin() != null){
-
-            Integer resultCode = card.decreaseBalance(amount);
-            if (!resultCode.equals(100)){
-                result = resultCode;
-
-            }
-        }
-        else if (card == null){
-            result = 110 ;
-            Logger.getGlobal().severe("null value passed : card");
-        }
-        else {
-            result = 110 ;
-            Logger.getGlobal().severe("null value passed : pin");
-        }
-
-        return result;
-    }
 
     public Card findCard(String card){
         return cardRepository.findCardByCardNumber(card);
     }
 
-    public Iterable<Card> findCard(User user){
-        return cardRepository.findCardsByOwner_Username(user.getUsername());
+    public Iterable<Card> findCardByUserPhone(String phone){
+        return cardRepository.findCardsByOwner_PhoneNumber(phone);
 
     }
 

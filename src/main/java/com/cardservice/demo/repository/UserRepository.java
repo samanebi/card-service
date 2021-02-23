@@ -9,7 +9,6 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends CrudRepository<User , Long> {
 
-    User findUserByUsername(String username);
     User findUserByCardsContains(String card);
 
 }

@@ -10,5 +10,5 @@ import java.util.Set;
 public interface CardRepository extends CrudRepository<Card , Long> {
 
     Card findCardByCardNumber(String card);
-    Set<Card> findCardsByOwner_Username(String username);
+    Set<Card> findCardsByOwner_PhoneNumber(String phone);
 }
