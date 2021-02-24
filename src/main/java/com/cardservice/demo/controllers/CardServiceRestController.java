@@ -25,7 +25,6 @@ public class CardServiceRestController {
         Card temp = new Card();
         temp.setCardNumber(card.getCard());
         temp.setOwner(userOperationService.findUserByPhone(card.getPhoneNumber()));
-        System.out.println(temp);
         return cardOperationService.add(temp);
     }
 
@@ -40,6 +39,7 @@ public class CardServiceRestController {
     public Object listCards(@RequestBody User user){
         return cardOperationService.findCardByUserPhone(user.getPhoneNumber());
     }
+
 
 
 }

@@ -15,11 +15,11 @@ public class Transaction {
 
     @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "cardId" , insertable = false , updatable = false)
+    @JoinColumn(name = "soursCardId" , updatable = false)
     private Card source;
     @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "cardId" , insertable = false , updatable = false)
+    @JoinColumn(name = "destCardId", updatable = false)
     private Card destination;
     private Integer amount;
     private Long timestamp;
@@ -36,8 +36,8 @@ public class Transaction {
     }
 
 
-
-
+    public Transaction() {
+    }
 
     public Card getDestination() {
         return destination;

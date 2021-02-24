@@ -17,7 +17,7 @@ public class Card {
     private String cardNumber;
     @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "userId" )
+    @JoinColumn(name = "userId")
     private User owner;
 
     @OneToMany(mappedBy = "destination")

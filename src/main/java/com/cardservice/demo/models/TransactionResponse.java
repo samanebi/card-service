@@ -4,6 +4,7 @@ public class TransactionResponse {
 
     private String result;
     private String error;
+    private Long timestamp;
 
     public TransactionResponse(String result, String error) {
         this.result = result;

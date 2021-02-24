@@ -4,6 +4,10 @@ public class SmsResponse {
 
     private String status;
 
+    public SmsResponse(String status) {
+        this.status = status;
+    }
+
     public String getStatus() {
         return status;
     }

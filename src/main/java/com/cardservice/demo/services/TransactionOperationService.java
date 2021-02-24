@@ -28,10 +28,10 @@ public class TransactionOperationService {
     public TransactionResponse execute(TransactionRequest transaction){
         //todo : 2 payment services
         TransactionResponse transactionResponse = this.paymentRequest(transaction);
-        User source = userOperationService.findUserByCard(transaction.getSource());
-        User dest = userOperationService.findUserByCard(transaction.getDest());
         Card sourceCard = cardOperationService.findCard(transaction.getSource());
         Card destCard = cardOperationService.findCard(transaction.getDest());
+        User source = sourceCard.getOwner();
+        User dest = destCard.getOwner();
         //todo : sms provider
         if (!transactionResponse.getResult().equals("failed")){
             Transaction transactionResult = new Transaction(sourceCard , destCard , transaction.getAmount());
@@ -56,11 +56,11 @@ public class TransactionOperationService {
         else{
             result = webclientService.requestPayment(transaction , address2);
         }
-        return result.block();
+        return new TransactionResponse("success" , "no error");
     }
     public SmsResponse SmsRequest(SmsRequest smsRequest){
         String address = environment.getProperty("sms-provider.adderss");
-        return webclientService.smsPayment(smsRequest , address).block();
+        return new SmsResponse("success");
     }
 
 }

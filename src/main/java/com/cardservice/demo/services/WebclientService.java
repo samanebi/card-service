@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -18,23 +19,40 @@ public class WebclientService {
     private WebClient webClient;
 
     public Mono<TransactionResponse> requestPayment(Object bodyValue , String uri){
-        return  webClient
-                .post()
-                .uri(uri)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(bodyValue)
-                .retrieve()
-                .bodyToMono(TransactionResponse.class);
+
+        Mono<TransactionResponse> result = null;
+        try {
+            result = webClient
+                    .post()
+                    .uri(uri)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .bodyValue(bodyValue)
+                    .retrieve()
+                    .bodyToMono(TransactionResponse.class);
+        }
+        catch (WebClientResponseException e){
+
+        }
+
+        return  result;
     }
 
     public Mono<SmsResponse> smsPayment(Object bodyValue , String uri){
-        return  webClient
-                .post()
-                .uri(uri)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(bodyValue)
-                .retrieve()
-                .bodyToMono(SmsResponse.class);
+        Mono<SmsResponse> result = null;
+        try {
+            result = webClient
+                    .post()
+                    .uri(uri)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .bodyValue(bodyValue)
+                    .retrieve()
+                    .bodyToMono(SmsResponse.class);
+        }
+        catch (WebClientResponseException e){
+
+        }
+
+        return result;
     }
 
 
