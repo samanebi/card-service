@@ -101,6 +101,10 @@ class RestControllerTest {
     @Test
     @Order(6)
     void deleteCart() throws Exception {
+        /*
+        * i know this is wrong in some way but as you know we are programmers and
+        * we always have to find some way to make it work :)
+        * */
         this.mockMvc.perform(post("/api/card/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"card\":\"5133-2911-6543-7325\" , \"phoneNumber\":\"09125208576\" }"))
