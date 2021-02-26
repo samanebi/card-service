@@ -1,0 +1,45 @@
+version: '3.2'
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 5342
+      MYSQL_DATABASE: cardservice
+    volumes:
+      - /tmp/cardservice:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysql", "-uroot" , "-p5342"]
+      interval: 5s
+      timeout: 100s
+      retries: 100
+    networks:
+      - cardservice
+
+
+  cardservice:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 9091:9091
+
+    networks:
+      - cardservice
+
+
+  smsservice:
+    build: ./sms-service
+    depends_on:
+      cardservice:
+        condition: service_started
+    networks:
+      - cardservice
+    ports:
+      - 9092:9092
+
+
+networks:
+  cardservice:
+    name: cardservice
+    driver: bridge

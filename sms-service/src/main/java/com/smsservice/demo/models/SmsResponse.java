@@ -1,4 +1,4 @@
-package com.cardservice.demo.models;
+package com.smsservice.demo.models;
 
 public class SmsResponse {
 

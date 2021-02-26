@@ -37,19 +37,20 @@ public class WebclientService {
         return  result;
     }
 
-    public Mono<SmsResponse> smsPayment(Object bodyValue , String uri){
+    public Mono<SmsResponse> smsPayment(Object bodyValue){
         Mono<SmsResponse> result = null;
         try {
             result = webClient
                     .post()
-                    .uri(uri)
+                    .uri("http://smsservice:9092/api/sms")
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .bodyValue(bodyValue)
                     .retrieve()
                     .bodyToMono(SmsResponse.class);
         }
         catch (WebClientResponseException e){
-
+            System.out.println("error");
+            e.printStackTrace();
         }
 
         return result;

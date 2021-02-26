@@ -47,6 +47,7 @@ public class TransactionOperationService {
     }
 
     public TransactionResponse paymentRequest(TransactionRequest transaction){
+
         String address1 = environment.getProperty("payment-provider1.address");
         String address2 = environment.getProperty("payment-provider2.address");
         Mono<TransactionResponse> result = null;
@@ -59,8 +60,8 @@ public class TransactionOperationService {
         return new TransactionResponse("success" , "no error");
     }
     public SmsResponse SmsRequest(SmsRequest smsRequest){
-        String address = environment.getProperty("sms-provider.adderss");
-        return new SmsResponse("success");
+        String address = environment.getProperty("sms-service.address");
+        return webclientService.smsPayment(smsRequest).block();
     }
 
 }
